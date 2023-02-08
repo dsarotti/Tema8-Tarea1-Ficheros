@@ -13,14 +13,14 @@ class Main {
         String texto;
         archivo = c.readLine("escribe el nombre del archivo a crear o editar: ");
         texto = c.readLine("Escribe el texto que poner en el fichero: ");
-        escribir(archivo, texto);
+        writeTextToFile(archivo, texto);
         archivo = c.readLine("Introduce la ruta de un archivo que leer: ");
         System.out.println(leer(archivo));
     }
 
-    public static void escribir(String nombreArchivo, String texto) {
-        try (FileWriter archivo = new FileWriter(nombreArchivo);BufferedWriter writer = new BufferedWriter(archivo)) {
-            writer.write(texto);
+    public static void writeTextToFile(String fn, String txt) {
+        try (FileWriter archivo = new FileWriter(fn);BufferedWriter writer = new BufferedWriter(archivo)) {
+            writer.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,6 @@ class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return texto;
     }
 }
