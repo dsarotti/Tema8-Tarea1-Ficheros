@@ -20,6 +20,7 @@ class Main {
         nombreArchivo = c.readLine("Escribe el nombre del archivo a escribir: ");
         temp = c.readLine("Escribe la frase a guardar en el fichero: ");
         writeTextToFile(nombreArchivo, temp);
+        System.out.println("edición finalizada, el resultado es el siguiente: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
             System.out.println(linea);
         }
@@ -30,6 +31,7 @@ class Main {
         nombreArchivo = c.readLine("Escribe el nombre del archivo en el que añadir una frase: ");
         temp = c.readLine("Escribe la frase que añadir al archivo: ");
         appendTextToFile(nombreArchivo, temp);
+        System.out.println("edición finalizada, el resultado es el siguiente: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
             System.out.println(linea);
         }
@@ -50,7 +52,7 @@ class Main {
 
         // Ejercicio 4: readLinesFromFile(String fn)
         System.out.println("\n# Ejercicio 4: readLinesFromFile(String fn)");
-        nombreArchivo = c.readLine("Esceribe el nombre del fichero a leer: ");
+        nombreArchivo = c.readLine("Escribe el nombre del fichero a leer: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
             System.out.println(linea);
         }
