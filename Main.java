@@ -85,7 +85,7 @@ class Main {
     public static void appendTextToFile(String fn, String txt) {
         try (FileWriter archivo = new FileWriter(fn, true); BufferedWriter writer = new BufferedWriter(archivo)) {
             if (!readLinesFromFile(fn).isEmpty())
-                writer.write("\n");
+                writer.newLine();
             writer.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
