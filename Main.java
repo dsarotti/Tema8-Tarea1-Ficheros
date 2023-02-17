@@ -1,5 +1,3 @@
-package ej3;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Console;
@@ -13,52 +11,103 @@ class Main {
     public static void main(String[] args) {
         Console c = System.console();
         String nombreArchivo;
-        nombreArchivo = c.readLine("escribe el nombre del archivo a editar: ");
         String temp;
-        List<String> lines = new LinkedList<>();
-        temp = c.readLine("Escribe lineas de texto separadas por <enter>, linea vacía para terminar: ");
-        while (!temp.isBlank()) {
-            lines.add(temp);
-            temp = c.readLine("Escribe lineas de texto separadas por <enter>, linea vacía para terminar: ");
+        int numeroLineas;
+        List<String> lineas = new LinkedList<>();
+
+        // Ejercicio 1: writeTextToFile(String fn, String txt)
+        System.out.println("# Ejercicio 1: writeTextToFile(String fn, String txt)");
+        nombreArchivo = c.readLine("Escribe el nombre del archivo a escribir: ");
+        temp = c.readLine("Escribe la frase a guardar en el fichero: ");
+        writeTextToFile(nombreArchivo, temp);
+        for (String linea : readLinesFromFile(nombreArchivo)) {
+            System.out.println(linea);
         }
-        appendLinesToFile(nombreArchivo, lines);
-        System.out.println("edición finalizada, el resultado es el siguiente: \n" +leer(nombreArchivo));
+        System.out.println("----------\nFin del ejercicio 1\n----------");
+
+        // Ejercicio2: appendTextToFile(String fn, String txt)
+        System.out.println("\n# Ejercicio2: appendTextToFile(String fn, String txt)");
+        nombreArchivo = c.readLine("Escribe el nombre del archivo en el que añadir una frase: ");
+        temp = c.readLine("Escribe la frase que añadir al archivo: ");
+        appendTextToFile(nombreArchivo, temp);
+        for (String linea : readLinesFromFile(nombreArchivo)) {
+            System.out.println(linea);
+        }
+        System.out.println("----------\nFin del ejercicio 2\n----------");
+
+        // Ejercicio 3: appendLinesToFile(String fn, List<String> lines)
+        System.out.println("\n# Ejercicio 3: appendLinesToFile(String fn, List<String> lines)");
+        nombreArchivo = c.readLine("Escribe el nombre del archivo a editar: ");
+        numeroLineas = Integer.parseInt(c.readLine("Indica el número de lineas a añadir: "));
+        for (int i = 0; i < numeroLineas; i++)
+            lineas.add(c.readLine("Frase "+(i+1)+": "));
+        appendLinesToFile(nombreArchivo, lineas);
+        System.out.println("edición finalizada, el resultado es el siguiente: ");
+        for (String linea : readLinesFromFile(nombreArchivo)) {
+            System.out.println(linea);
+        }
+        System.out.println("----------\nFin del ejercicio 3\n----------");
+
+        //Ejercicio 4: readLinesFromFile(String fn)
+        System.out.println("\n# Ejercicio 4: readLinesFromFile(String fn)");
+        nombreArchivo=c.readLine("Esceribe el nombre del fichero a leer: ");
+        for (String linea : readLinesFromFile(nombreArchivo)) {
+            System.out.println(linea);            
+        }
+        System.out.println("----------\nFin del ejercicio 4\n----------");
     }
 
-    public static void appendLinesToFile(String fn, List<String> lines){
-        for (String txt : lines) {
-            appendTextToFile(fn, "\n" + txt);
-        }
-    }
-
-    public static void appendTextToFile(String fn, String txt){
-        try (FileWriter archivo = new FileWriter(fn, true);BufferedWriter writer = new BufferedWriter(archivo)) {
-            writer.write(txt);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Escribe un texto en un fichero. El contenido del fichero se sobreescribirá.
+     * @param fn    el nombre del archivo.
+     * @param txt   el texto a escribir en el archivo {@code fn}.
+     */
     public static void writeTextToFile(String fn, String txt) {
-        try (FileWriter archivo = new FileWriter(fn);BufferedWriter writer = new BufferedWriter(archivo)) {
-            writer.write(txt);
+        try (FileWriter archivo = new FileWriter(fn); BufferedWriter writer = new BufferedWriter(archivo)) {
+            writer.write(txt + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String leer(String nombreArchivo) {
-        String linea = "";
-        String texto = "";
-        try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
-            do {
-                linea = reader.readLine();
-                if (linea != null)
-                    texto += linea + "\n";
-            } while (linea != null);
+    /**
+     * Añade un texto al final de un fichero. El contenido previo del fichero se conserva.
+     * @param fn    el nombre del archivo.
+     * @param txt   el texto a añadir en el archivo {@code fn}.
+     */
+    public static void appendTextToFile(String fn, String txt) {
+        try (FileWriter archivo = new FileWriter(fn, true); BufferedWriter writer = new BufferedWriter(archivo)) {
+            writer.write(txt + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return texto;
+    }
+
+    /**
+     * Añade todas las líneas de una lista al final de un fichero. El contenido previo del fichero se conserva.
+     * @param fn    el nombre del archivo.
+     * @param lines la lista de líneas a añadir en el archivo {@code fn}.
+     */
+    public static void appendLinesToFile(String fn, List<String> lines) {
+        for (String txt : lines) {
+            appendTextToFile(fn, txt);
+        }
+    }
+
+    /**
+     * Lee el contenido de un fichero y lo devuelve en una lista.
+     * @param fn    el nombre del archivo.
+     * @return      una lista con las líneas del archivo {@code fn}.
+     */
+    public static List<String> readLinesFromFile(String fn) {
+        List<String> textos = new LinkedList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(fn))) {
+            while (reader.ready()) {
+                textos.add(reader.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return textos;
     }
 }
