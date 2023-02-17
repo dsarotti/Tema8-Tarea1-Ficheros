@@ -11,15 +11,15 @@ class Main {
     public static void main(String[] args) {
         Console c = System.console();
         String nombreArchivo;
-        String temp;
+        String frase;
         int numeroLineas;
         List<String> lineas = new LinkedList<>();
 
         // Ejercicio 1: writeTextToFile(String fn, String txt)
         System.out.println("# Ejercicio 1: writeTextToFile(String fn, String txt)");
         nombreArchivo = c.readLine("Escribe el nombre del archivo a escribir: ");
-        temp = c.readLine("Escribe la frase a guardar en el fichero: ");
-        writeTextToFile(nombreArchivo, temp);
+        frase = c.readLine("Escribe la frase a guardar en el fichero: ");
+        writeTextToFile(nombreArchivo, frase);
         System.out.println("edición finalizada, el resultado es el siguiente: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
             System.out.println(linea);
@@ -29,8 +29,8 @@ class Main {
         // Ejercicio2: appendTextToFile(String fn, String txt)
         System.out.println("\n# Ejercicio2: appendTextToFile(String fn, String txt)");
         nombreArchivo = c.readLine("Escribe el nombre del archivo en el que añadir una frase: ");
-        temp = c.readLine("Escribe la frase que añadir al archivo: ");
-        appendTextToFile(nombreArchivo, temp);
+        frase = c.readLine("Escribe la frase que añadir al archivo: ");
+        appendTextToFile(nombreArchivo, frase);
         System.out.println("edición finalizada, el resultado es el siguiente: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
             System.out.println(linea);
@@ -41,8 +41,10 @@ class Main {
         System.out.println("\n# Ejercicio 3: appendLinesToFile(String fn, List<String> lines)");
         nombreArchivo = c.readLine("Escribe el nombre del archivo a editar: ");
         numeroLineas = Integer.parseInt(c.readLine("Indica el número de lineas a añadir: "));
-        for (int i = 0; i < numeroLineas; i++)
-            lineas.add(c.readLine("Frase " + (i + 1) + ": "));
+        for (int i = 0; i < numeroLineas; i++) {
+            frase = c.readLine("Frase " + (i + 1) + ": ");
+            lineas.add(frase);
+        }
         appendLinesToFile(nombreArchivo, lineas);
         System.out.println("edición finalizada, el resultado es el siguiente: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
@@ -110,14 +112,14 @@ class Main {
      * @return una lista con las líneas del archivo {@code fn}.
      */
     public static List<String> readLinesFromFile(String fn) {
-        List<String> textos = new LinkedList<>();
+        List<String> lineas = new LinkedList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fn))) {
             while (reader.ready()) {
-                textos.add(reader.readLine());
+                lineas.add(reader.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return textos;
+        return lineas;
     }
 }
