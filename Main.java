@@ -40,7 +40,7 @@ class Main {
         nombreArchivo = c.readLine("Escribe el nombre del archivo a editar: ");
         numeroLineas = Integer.parseInt(c.readLine("Indica el número de lineas a añadir: "));
         for (int i = 0; i < numeroLineas; i++)
-            lineas.add(c.readLine("Frase "+(i+1)+": "));
+            lineas.add(c.readLine("Frase " + (i + 1) + ": "));
         appendLinesToFile(nombreArchivo, lineas);
         System.out.println("edición finalizada, el resultado es el siguiente: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
@@ -48,43 +48,50 @@ class Main {
         }
         System.out.println("----------\nFin del ejercicio 3\n----------");
 
-        //Ejercicio 4: readLinesFromFile(String fn)
+        // Ejercicio 4: readLinesFromFile(String fn)
         System.out.println("\n# Ejercicio 4: readLinesFromFile(String fn)");
-        nombreArchivo=c.readLine("Esceribe el nombre del fichero a leer: ");
+        nombreArchivo = c.readLine("Esceribe el nombre del fichero a leer: ");
         for (String linea : readLinesFromFile(nombreArchivo)) {
-            System.out.println(linea);            
+            System.out.println(linea);
         }
         System.out.println("----------\nFin del ejercicio 4\n----------");
     }
 
     /**
      * Escribe un texto en un fichero. El contenido del fichero se sobreescribirá.
-     * @param fn    el nombre del archivo.
-     * @param txt   el texto a escribir en el archivo {@code fn}.
+     * 
+     * @param fn  el nombre del archivo.
+     * @param txt el texto a escribir en el archivo {@code fn}.
      */
     public static void writeTextToFile(String fn, String txt) {
         try (FileWriter archivo = new FileWriter(fn); BufferedWriter writer = new BufferedWriter(archivo)) {
-            writer.write(txt + "\n");
+            writer.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Añade un texto al final de un fichero. El contenido previo del fichero se conserva.
-     * @param fn    el nombre del archivo.
-     * @param txt   el texto a añadir en el archivo {@code fn}.
+     * Añade un texto al final de un fichero. El contenido previo del fichero se
+     * conserva.
+     * 
+     * @param fn  el nombre del archivo.
+     * @param txt el texto a añadir en el archivo {@code fn}.
      */
     public static void appendTextToFile(String fn, String txt) {
         try (FileWriter archivo = new FileWriter(fn, true); BufferedWriter writer = new BufferedWriter(archivo)) {
-            writer.write(txt + "\n");
+            if (!readLinesFromFile(fn).isEmpty())
+                writer.write("\n");
+            writer.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Añade todas las líneas de una lista al final de un fichero. El contenido previo del fichero se conserva.
+     * Añade todas las líneas de una lista al final de un fichero. El contenido
+     * previo del fichero se conserva.
+     * 
      * @param fn    el nombre del archivo.
      * @param lines la lista de líneas a añadir en el archivo {@code fn}.
      */
@@ -96,8 +103,9 @@ class Main {
 
     /**
      * Lee el contenido de un fichero y lo devuelve en una lista.
-     * @param fn    el nombre del archivo.
-     * @return      una lista con las líneas del archivo {@code fn}.
+     * 
+     * @param fn el nombre del archivo.
+     * @return una lista con las líneas del archivo {@code fn}.
      */
     public static List<String> readLinesFromFile(String fn) {
         List<String> textos = new LinkedList<>();
