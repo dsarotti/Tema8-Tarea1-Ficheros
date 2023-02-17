@@ -83,8 +83,8 @@ class Main {
      * @param txt el texto a añadir en el archivo {@code fn}.
      */
     public static void appendTextToFile(String fn, String txt) {
-        try (FileWriter archivo = new FileWriter(fn, true); BufferedWriter writer = new BufferedWriter(archivo)) {
-            if (!readLinesFromFile(fn).isEmpty())
+        try (FileWriter archivo = new FileWriter(fn, true); BufferedWriter writer = new BufferedWriter(archivo); BufferedReader reader = new BufferedReader(new FileReader(fn))) {
+            if (reader.ready())
                 writer.newLine();
             writer.write(txt);
         } catch (IOException e) {
